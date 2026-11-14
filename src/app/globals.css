@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+/*
+ * UGIP Tanakpur theme: a college look – white pages, navy blue as the main colour, gold for highlights,
+ * serif headings.
+ * Change the colours here; every screen follows. Red, amber and emerald stay for status.
+ */
+@theme {
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: Georgia, 'Noto Serif', 'Noto Serif Devanagari', Cambria, 'Times New Roman', serif;
+  --color-gold-100: #f8efd4;
+  --color-gold-200: #f1dca4;
+  --color-gold-300: #e6c66f;
+  --color-gold-400: #d8ad45;
+  --color-gold-500: #c49a2c;
+  --color-gold-600: #a37e1f;
+  --color-gold-700: #7d6118;
+
+  --color-slate-50: #f9fafa;
+  --color-slate-100: #f2f4f4;
+  --color-slate-200: #e4e7e7;
+  --color-slate-300: #d1d5d6;
+  --color-slate-400: #9ca3a4;
+  --color-slate-500: #6b7374;
+  --color-slate-600: #4c5455;
+  --color-slate-700: #3a4142;
+  --color-slate-800: #272c2d;
+  --color-slate-900: #181c1d;
+  --color-slate-950: #0e1112;
+  --color-cyan-50: #eef3fa;
+  --color-cyan-100: #dce6f3;
+  --color-cyan-200: #b9cbe5;
+  --color-cyan-300: #8eaad3;
+  --color-cyan-400: #5f84bd;
+  --color-cyan-500: #3d64a3;
+  --color-cyan-600: #2a4f8a;
+  --color-cyan-700: #1f3f73;
+  --color-cyan-800: #1a345e;
+  --color-cyan-900: #14284b;
+  --color-cyan-950: #0c1a31;
+  --color-sky-50: #eef3fa;
+  --color-sky-100: #dce6f3;
+  --color-sky-200: #b9cbe5;
+  --color-sky-300: #8eaad3;
+  --color-sky-400: #5f84bd;
+  --color-sky-500: #3d64a3;
+  --color-sky-600: #2a4f8a;
+  --color-sky-700: #1f3f73;
+  --color-sky-800: #1a345e;
+  --color-sky-900: #14284b;
+  --color-sky-950: #0c1a31;
+  --color-teal-50: #eef3fa;
+  --color-teal-100: #dce6f3;
+  --color-teal-200: #b9cbe5;
+  --color-teal-300: #8eaad3;
+  --color-teal-400: #5f84bd;
+  --color-teal-500: #3d64a3;
+  --color-teal-600: #2a4f8a;
+  --color-teal-700: #1f3f73;
+  --color-teal-800: #1a345e;
+  --color-teal-900: #14284b;
+  --color-teal-950: #0c1a31;
+  --color-blue-50: #eef3fa;
+  --color-blue-100: #dce6f3;
+  --color-blue-200: #b9cbe5;
+  --color-blue-300: #8eaad3;
+  --color-blue-400: #5f84bd;
+  --color-blue-500: #3d64a3;
+  --color-blue-600: #2a4f8a;
+  --color-blue-700: #1f3f73;
+  --color-blue-800: #1a345e;
+  --color-blue-900: #14284b;
+  --color-blue-950: #0c1a31;
+  --color-indigo-50: #eef3fa;
+  --color-indigo-100: #dce6f3;
+  --color-indigo-200: #b9cbe5;
+  --color-indigo-300: #8eaad3;
+  --color-indigo-400: #5f84bd;
+  --color-indigo-500: #3d64a3;
+  --color-indigo-600: #2a4f8a;
+  --color-indigo-700: #1f3f73;
+  --color-indigo-800: #1a345e;
+  --color-indigo-900: #14284b;
+  --color-indigo-950: #0c1a31;
+  --color-violet-50: #eef3fa;
+  --color-violet-100: #dce6f3;
+  --color-violet-200: #b9cbe5;
+  --color-violet-300: #8eaad3;
+  --color-violet-400: #5f84bd;
+  --color-violet-500: #3d64a3;
+  --color-violet-600: #2a4f8a;
+  --color-violet-700: #1f3f73;
+  --color-violet-800: #1a345e;
+  --color-violet-900: #14284b;
+  --color-violet-950: #0c1a31;
+}
+
+/* Dark mode follows the app's own toggle (class "dark" on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background-color: #f3f5f9;
+    color: #181c1d;
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  .dark body {
+    background-color: #101314;
+    color: #f5f5f4;
+  }
+}
+
+/* Calmer, less "generated" look: softer weights, flatter cards, less glow */
+@layer utilities {
+  .font-black {
+    font-weight: 700;
+  }
+  .tracking-wider,
+  .tracking-widest {
+    letter-spacing: 0.02em;
+  }
+  .animate-pulse,
+  .animate-ping {
+    animation: none;
+  }
+  .shadow-xl,
+  .shadow-2xl {
+    box-shadow: 0 1px 2px rgb(28 25 23 / 0.06), 0 8px 24px -12px rgb(28 25 23 / 0.18);
+  }
+  .rounded-3xl,
+  .rounded-2xl {
+    border-radius: 0.75rem;
+  }
+  .rounded-xl {
+    border-radius: 0.5rem;
+  }
+
+  /* Readability: the smallest text sizes used across the portal are raised so nothing needs zooming */
+  .text-\[9px\],
+  .text-\[10px\] {
+    font-size: 12px;
+  }
+  .text-\[11px\] {
+    font-size: 12.5px;
+  }
+  .text-xs {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .text-sm {
+    font-size: 14.5px;
+  }
+}
+
+/* Page titles stay modest so the content comes first; headings use the college serif */
+main h1 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+main h1,
+main h2,
+main h3 {
+  font-family: var(--font-serif);
+  letter-spacing: 0;
+}
+
+/* Notice strip under the masthead */
+@keyframes college-ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.college-ticker {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: college-ticker 45s linear infinite;
+}
+.college-ticker:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .college-ticker {
+    animation: none;
+  }
+}
+main section,
+main header {
+  box-shadow: none;
+}
+/* Keyboard users can always see where they are */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #2a4f8a;
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  button,
+  a,
+  select,
+  input {
+    min-height: 40px;
+  }
+}

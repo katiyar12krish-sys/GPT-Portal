@@ -1,0 +1,152 @@
+import type { PlacementMcq } from '../placementQnaBank';
+import { fromRows, rng, mcq, type Row } from './builder';
+
+// Uttarakhand general knowledge asked in UKSSSC / UKPSC and other state exams.
+const C = 'Uttarakhand GK' as const;
+
+const DISTRICTS: Array<[string, string, 'Garhwal' | 'Kumaon']> = [
+  ['Almora', 'Almora', 'Kumaon'], ['Bageshwar', 'Bageshwar', 'Kumaon'], ['Champawat', 'Champawat', 'Kumaon'], ['Nainital', 'Nainital', 'Kumaon'],
+  ['Pithoragarh', 'Pithoragarh', 'Kumaon'], ['Udham Singh Nagar', 'Rudrapur', 'Kumaon'], ['Chamoli', 'Gopeshwar', 'Garhwal'], ['Dehradun', 'Dehradun', 'Garhwal'],
+  ['Haridwar', 'Roshnabad', 'Garhwal'], ['Pauri Garhwal', 'Pauri', 'Garhwal'], ['Rudraprayag', 'Rudraprayag', 'Garhwal'], ['Tehri Garhwal', 'New Tehri', 'Garhwal'], ['Uttarkashi', 'Uttarkashi', 'Garhwal'],
+];
+
+const ROWS: Row[] = [
+  // ---- State basics ----
+  ['Uttarakhand was formed on', '9 November 2000', '1 November 2000', '15 November 2000', '26 January 2001'],
+  ['Uttarakhand was carved out of', 'Uttar Pradesh', 'Himachal Pradesh', 'Bihar', 'Madhya Pradesh'],
+  ['Uttarakhand became which state of India', '27th', '26th', '28th', '29th'],
+  ['Earlier name of Uttarakhand', 'Uttaranchal', 'Uttar Kosala', 'Himachal', 'Purvanchal'],
+  ['The name changed to Uttarakhand in', '2007', '2002', '2005', '2010'],
+  ['Number of districts in Uttarakhand', '13', '11', '15', '17'],
+  ['Number of divisions in Uttarakhand', '2', '3', '4', '5'],
+  ['Winter capital of Uttarakhand', 'Dehradun', 'Nainital', 'Haridwar', 'Almora'],
+  ['Summer capital of Uttarakhand', 'Bhararisain (Gairsain)', 'Mussoorie', 'Nainital', 'Ranikhet'],
+  ['Gairsain is in which district', 'Chamoli', 'Almora', 'Pauri Garhwal', 'Bageshwar'],
+  ['Seats in the Uttarakhand Legislative Assembly', '70', '60', '80', '90'],
+  ['Lok Sabha seats from Uttarakhand', '5', '3', '7', '10'],
+  ['Rajya Sabha seats from Uttarakhand', '3', '1', '5', '7'],
+  ['Seat of the Uttarakhand High Court', 'Nainital', 'Dehradun', 'Haridwar', 'Haldwani'],
+  ['First Chief Minister of Uttarakhand', 'Nityanand Swami', 'N. D. Tiwari', 'B. C. Khanduri', 'Bhagat Singh Koshyari'],
+  ['First elected Chief Minister of Uttarakhand (2002)', 'N. D. Tiwari', 'Nityanand Swami', 'Harish Rawat', 'Vijay Bahuguna'],
+  ['First Governor of Uttarakhand', 'Surjit Singh Barnala', 'Sudarshan Agarwal', 'B. L. Joshi', 'Margaret Alva'],
+  ['Area of Uttarakhand (approx.)', '53,483 sq km', '23,000 sq km', '1,00,000 sq km', '78,000 sq km'],
+  ['Second official language of Uttarakhand', 'Sanskrit', 'Urdu', 'Garhwali', 'Punjabi'],
+  ['Population of Uttarakhand (2011 census, approx.)', '1.01 crore', '50 lakh', '2.5 crore', '5 crore'],
+  ['Literacy rate of Uttarakhand (2011, approx.)', '78.8%', '60%', '93%', '50%'],
+  ['Sex ratio of Uttarakhand (2011)', '963', '1084', '879', '1000'],
+  ['Largest district by area', 'Chamoli', 'Champawat', 'Haridwar', 'Nainital'],
+  ['Smallest district by area', 'Champawat', 'Rudraprayag', 'Bageshwar', 'Dehradun'],
+  ['Most populated district (2011)', 'Haridwar', 'Dehradun', 'Nainital', 'Almora'],
+  ['Least populated district (2011)', 'Rudraprayag', 'Champawat', 'Bageshwar', 'Chamoli'],
+  ['International borders of Uttarakhand', 'Nepal and China', 'Nepal and Bhutan', 'China and Pakistan', 'Bhutan and China'],
+  ['State animal of Uttarakhand', 'Musk deer (Kasturi Mrig)', 'Snow leopard', 'Tiger', 'Elephant'],
+  ['State bird of Uttarakhand', 'Himalayan Monal', 'Peacock', 'Koel', 'Sarus crane'],
+  ['State flower of Uttarakhand', 'Brahma Kamal', 'Lotus', 'Rose', 'Marigold'],
+  ['State tree of Uttarakhand', 'Burans', 'Deodar', 'Oak', 'Sal'],
+  ['First state in India to bring in the Uniform Civil Code', 'Uttarakhand', 'Gujarat', 'Goa', 'Assam', 'The Uniform Civil Code came into force in Uttarakhand in January 2025.'],
+  ['38th National Games (2025) were hosted by', 'Uttarakhand', 'Goa', 'Gujarat', 'Kerala'],
+  // ---- Geography ----
+  ['Highest peak located entirely in Uttarakhand', 'Nanda Devi', 'Trishul', 'Kedarnath', 'Chaukhamba'],
+  ['Height of Nanda Devi (approx.)', '7,816 m', '6,000 m', '8,848 m', '5,500 m'],
+  ['River Ganga gets its name at', 'Devprayag', 'Rudraprayag', 'Haridwar', 'Karnaprayag'],
+  ['Bhagirathi and Alaknanda meet at', 'Devprayag', 'Vishnuprayag', 'Nandprayag', 'Rudraprayag'],
+  ['Alaknanda and Mandakini meet at', 'Rudraprayag', 'Devprayag', 'Karnaprayag', 'Nandprayag'],
+  ['Alaknanda and Pindar meet at', 'Karnaprayag', 'Rudraprayag', 'Vishnuprayag', 'Devprayag'],
+  ['Alaknanda and Nandakini meet at', 'Nandprayag', 'Karnaprayag', 'Devprayag', 'Rudraprayag'],
+  ['Alaknanda and Dhauliganga meet at', 'Vishnuprayag', 'Nandprayag', 'Devprayag', 'Karnaprayag'],
+  ['Origin of the Bhagirathi', 'Gaumukh (Gangotri glacier)', 'Yamunotri', 'Pindari glacier', 'Satopanth only'],
+  ['Origin of the Yamuna', 'Yamunotri', 'Gaumukh', 'Milam', 'Kafni'],
+  ['Pindari glacier is in which district', 'Bageshwar', 'Chamoli', 'Uttarkashi', 'Pithoragarh'],
+  ['River forming the India–Nepal border in Champawat', 'Sharda (Kali)', 'Ramganga', 'Kosi', 'Yamuna'],
+  ['Banbasa barrage is on the river', 'Sharda', 'Ganga', 'Yamuna', 'Ramganga'],
+  ['Tanakpur is in which district', 'Champawat', 'Pithoragarh', 'Nainital', 'Udham Singh Nagar'],
+  ['Tehri dam is built on the river', 'Bhagirathi', 'Alaknanda', 'Yamuna', 'Sharda'],
+  ['Lipulekh pass is in which district', 'Pithoragarh', 'Chamoli', 'Uttarkashi', 'Bageshwar'],
+  ['Mana village is in which district', 'Chamoli', 'Uttarkashi', 'Pithoragarh', 'Rudraprayag'],
+  ['Roopkund lake is in which district', 'Chamoli', 'Nainital', 'Tehri Garhwal', 'Almora'],
+  ['Bhimtal, Sattal and Naukuchiatal are in', 'Nainital district', 'Almora district', 'Chamoli district', 'Pauri district'],
+  ['Auli, famous for skiing, is in', 'Chamoli', 'Nainital', 'Almora', 'Dehradun'],
+  ['Jim Corbett National Park is mainly in', 'Nainital and Pauri', 'Dehradun and Haridwar', 'Chamoli and Almora', 'Champawat and Pithoragarh'],
+  ['Jim Corbett National Park was set up in', '1936', '1950', '1972', '1920'],
+  ['Corbett was first named', 'Hailey National Park', 'Ramganga Sanctuary', 'Kumaon Park', 'Nainital Reserve'],
+  ['Valley of Flowers is in which district', 'Chamoli', 'Uttarkashi', 'Bageshwar', 'Pithoragarh'],
+  ['Rajaji National Park lies around', 'Haridwar, Dehradun and Pauri', 'Almora and Nainital', 'Chamoli and Rudraprayag', 'Pithoragarh and Champawat'],
+  // ---- Religion & culture ----
+  ['Kedarnath temple is in which district', 'Rudraprayag', 'Chamoli', 'Uttarkashi', 'Tehri Garhwal'],
+  ['Badrinath temple is in which district', 'Chamoli', 'Rudraprayag', 'Uttarkashi', 'Almora'],
+  ['Gangotri and Yamunotri are in which district', 'Uttarkashi', 'Chamoli', 'Tehri Garhwal', 'Dehradun'],
+  ['Kumbh Mela in Uttarakhand is held at', 'Haridwar', 'Rishikesh', 'Almora', 'Nainital'],
+  ['Purnagiri temple is near', 'Tanakpur', 'Almora', 'Kotdwar', 'Joshimath'],
+  ['Bagwal (stone-pelting fair) is held at', 'Devidhura, Champawat', 'Haridwar', 'Kedarnath', 'Ranikhet'],
+  ['Uttarayani fair is famous at', 'Bageshwar', 'Rishikesh', 'Nainital', 'Mussoorie'],
+  ['Nanda Devi Raj Jat is held about every', '12 years', '1 year', '5 years', '50 years'],
+  ['Harela festival marks', 'The sowing and green season', 'Harvest of apples', 'Snowfall', 'New Year only'],
+  ['Phool Dei is celebrated by', 'Children putting flowers at doorsteps', 'Boat races', 'Horse riding', 'Fireworks'],
+  ['Hemkund Sahib is in which district', 'Chamoli', 'Haridwar', 'Dehradun', 'Nainital'],
+  ['Aipan is a traditional', 'Floor and wall art of Kumaon', 'Dance of Garhwal', 'Food of Tehri', 'Musical instrument'],
+  ['Chholiya is a', 'Sword dance of Kumaon', 'Garhwali food', 'Festival of Dehradun', 'Temple'],
+  ['Scheduled tribes of Uttarakhand include', 'Tharu, Bhotia, Buksa, Raji, Jaunsari', 'Gond and Bhil', 'Santhal and Munda', 'Naga and Kuki'],
+  ['Largest tribal group of Uttarakhand', 'Tharu', 'Raji', 'Bhotia', 'Buksa'],
+  // ---- History ----
+  ['Ancient name of the Kumaon region', 'Manaskhand', 'Kedarkhand', 'Kosala', 'Magadh'],
+  ['Ancient name of the Garhwal region', 'Kedarkhand', 'Manaskhand', 'Avadh', 'Panchal'],
+  ['Early dynasty of Kumaon based at Katyur valley', 'Katyuri', 'Maurya', 'Chola', 'Pallava'],
+  ['Early capital of the Chand rulers of Kumaon', 'Champawat', 'Dehradun', 'Haridwar', 'Pauri'],
+  ['Gorkha rule in the region ended with the Treaty of', 'Sugauli (1816)', 'Allahabad (1765)', 'Salbai (1782)', 'Yandabo (1826)'],
+  ['Tehri princely state merged with India in', '1949', '1947', '1956', '1962'],
+  ['Coolie Begar movement took place at Bageshwar in', '1921', '1905', '1942', '1930'],
+  ['Leader of the Coolie Begar movement', 'Badri Dutt Pandey', 'Sri Dev Suman', 'G. B. Pant', 'Chandra Singh Garhwali'],
+  ['Who is known as "Kumaon Kesari"?', 'Badri Dutt Pandey', 'Govind Ballabh Pant', 'Sumitranandan Pant', 'Nain Singh Rawat'],
+  ['Tiladi massacre (Rawain) took place in', '1930', '1919', '1942', '1947'],
+  ['Hero of the Peshawar incident of 1930', 'Veer Chandra Singh Garhwali', 'Sri Dev Suman', 'Gabar Singh Negi', 'Darwan Singh Negi'],
+  ['Sri Dev Suman fought against the rule of', 'Tehri princely state', 'Nepal', 'Mughals', 'Chand kings'],
+  ['Chipko movement began in the', '1970s', '1920s', '1990s', '1950s'],
+  ['Woman leader of Chipko at Reni village', 'Gaura Devi', 'Bachendri Pal', 'Teelu Rauteli', 'Sarla Behn'],
+  ['Chipko is linked with', 'Sunderlal Bahuguna and Chandi Prasad Bhatt', 'N. D. Tiwari and Pant', 'Medha Patkar', 'Baba Amte'],
+  ['Khatima firing during the statehood movement took place on', '1 September 1994', '2 October 1994', '15 August 1994', '9 November 1994'],
+  ['Mussoorie firing took place on', '2 September 1994', '1 September 1994', '2 October 1994', '26 January 1994'],
+  ['Rampur Tiraha incident took place on', '2 October 1994', '1 September 1994', '2 September 1994', '9 November 2000'],
+  ['Uttarakhand Kranti Dal was formed in', '1979', '2000', '1960', '1994'],
+  // ---- People ----
+  ['First Indian woman to climb Mount Everest, from Uttarkashi', 'Bachendri Pal', 'Santosh Yadav', 'Premlata Agarwal', 'Arunima Sinha'],
+  ['Bharat Ratna awardee born near Almora', 'Govind Ballabh Pant', 'Sumitranandan Pant', 'N. D. Tiwari', 'H. N. Bahuguna'],
+  ['Hindi poet born at Kausani who won the Jnanpith', 'Sumitranandan Pant', 'Mahadevi Varma', 'Nirala', 'Dinkar'],
+  ['Pandit who surveyed Tibet for the British', 'Nain Singh Rawat', 'Badri Dutt Pandey', 'G. B. Pant', 'Jim Corbett'],
+  ['Victoria Cross winner from Garhwal in World War I', 'Darwan Singh Negi', 'Chandra Singh Garhwali', 'Sri Dev Suman', 'Nain Singh'],
+  // ---- Institutions ----
+  ['Forest Research Institute is at', 'Dehradun', 'Nainital', 'Haridwar', 'Pantnagar'],
+  ['Indian Military Academy is at', 'Dehradun', 'Roorkee', 'Almora', 'Ranikhet'],
+  ['Lal Bahadur Shastri National Academy of Administration is at', 'Mussoorie', 'Nainital', 'Dehradun', 'Haridwar'],
+  ['Headquarters of ONGC', 'Dehradun', 'Haridwar', 'Rishikesh', 'Roorkee'],
+  ['Survey of India headquarters', 'Dehradun', 'Nainital', 'Almora', 'Kotdwar'],
+  ['First agricultural university of India', 'Pantnagar', 'Ludhiana', 'Coimbatore', 'Hisar'],
+  ['IIT Roorkee began in 1847 as', 'Thomson College of Civil Engineering', 'Forest College', 'Doon School', 'Bengal Engineering College'],
+  ['ARIES observatory is near', 'Nainital', 'Haridwar', 'Pauri', 'Tehri'],
+  ['Uttarakhand Public Service Commission is at', 'Haridwar', 'Dehradun', 'Nainital', 'Almora'],
+  ['UBTER is at', 'Roorkee', 'Dehradun', 'Nainital', 'Haldwani'],
+  ['Uttarakhand School Education Board is at', 'Ramnagar', 'Dehradun', 'Haridwar', 'Haldwani'],
+  ['BHEL unit in Uttarakhand is at', 'Haridwar', 'Dehradun', 'Rudrapur', 'Almora'],
+  ['THDC India headquarters', 'Rishikesh', 'Dehradun', 'Tehri', 'Haridwar'],
+  ['State power distribution company', 'UPCL', 'UJVN Ltd', 'PTCUL', 'THDC'],
+  ['State hydro power generation company', 'UJVN Ltd', 'UPCL', 'PTCUL', 'NHPC'],
+  ['State power transmission company', 'PTCUL', 'UPCL', 'UJVN Ltd', 'SJVN'],
+  ['Exam body for Group C posts in Uttarakhand', 'UKSSSC', 'UKPSC', 'UBSE', 'UPSC'],
+  ['Industrial estates in Uttarakhand are developed by', 'SIDCUL', 'CPWD', 'NHAI', 'RITES'],
+  ['Pantnagar SIDCUL is in which district', 'Udham Singh Nagar', 'Nainital', 'Haridwar', 'Dehradun'],
+  ['Rishikesh–Karnaprayag project is a', 'Railway line', 'Airport', 'Dam', 'Ropeway'],
+  ['Airport serving Dehradun', 'Jolly Grant', 'Pantnagar', 'Naini Saini', 'Gauchar'],
+  ['Airport in Pithoragarh', 'Naini Saini', 'Jolly Grant', 'Pantnagar', 'Chinyalisaur'],
+  ['Railhead nearest to Purnagiri', 'Tanakpur', 'Kathgodam', 'Kotdwar', 'Ramnagar'],
+];
+
+export const UTTARAKHAND_QUESTIONS: PlacementMcq[] = (() => {
+  const r = rng(801);
+  const towns = DISTRICTS.map(d => d[1]);
+  const hq = DISTRICTS.map(([d, h], i) =>
+    mcq(r, `uk-hq-${String(i + 1).padStart(2, '0')}`, C, `Headquarters of ${d} district`, h, r.shuffle(towns.filter(t => t !== h)).slice(0, 3), `${d} district headquarters: ${h}`)
+  );
+  const div = DISTRICTS.map(([d, , g], i) =>
+    mcq(r, `uk-div-${String(i + 1).padStart(2, '0')}`, C, `${d} district is in which division?`, g, [g === 'Garhwal' ? 'Kumaon' : 'Garhwal', 'Rohilkhand', 'Terai'], `${d} is in ${g} division.`)
+  );
+  return [...fromRows('uk-gk', 802, C, ROWS), ...[...hq, ...div].filter((q): q is PlacementMcq => !!q)];
+})();

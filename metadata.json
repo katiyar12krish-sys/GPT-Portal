@@ -1,0 +1,6 @@
+{
+  "name": "Uttarakhand Government Polytechnic - Placement & Student Portal",
+  "description": "Government Polytechnic Tanakpur portal with verified student records for Anurag Mourya, class-wise Excel generator, 10 Civil & 10 CS recruiters, 260+ placement questions, real-time doubt resolution, 3-reminder assignment alerts, and subject-level RBAC.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

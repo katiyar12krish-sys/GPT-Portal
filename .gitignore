@@ -1,0 +1,15 @@
+node_modules/
+.next/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+seed-credentials.txt
+.env.local
+.demo-data/
+
+# Local Netlify folder
+.netlify
+*.tsbuildinfo
